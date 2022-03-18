@@ -14,10 +14,10 @@ env.config();
 const authJobposterRoutes = require('./routes/jobposter/auth');
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json());  
 app.use("/public", express.static(path.join(__dirname, "uploads")));
 app.use("/api/jobposter", authJobposterRoutes);
- 
+  
 mongoose
   .connect(
     `mongodb+srv://nyx:Password1@hiyamee.hbljr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,

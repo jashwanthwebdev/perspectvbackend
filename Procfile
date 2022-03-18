@@ -1,1 +1,1 @@
-web: nodemon ./src/index.server.js
+Worker: nodemon ./src/index.server.js 
