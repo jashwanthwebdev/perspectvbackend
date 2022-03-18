@@ -5,7 +5,7 @@ const path = require("path");
 const cors = require("cors");
 const env = require("dotenv");
 const port = process.env.PORT || 5800; 
-
+console.log(port)
 //environment variable or you can say constants
 env.config();
 
@@ -24,10 +24,10 @@ mongoose
     {
       useNewUrlParser: true, 
       useUnifiedTopology: true,
-    }
-  )   
+    }  
+  )    
   .then(() => {  
-    console.log("Database connected");
+    console.log("Database connected"); 
   }); 
   
 app.listen(port, () => {  
