@@ -8,13 +8,13 @@ const generateJwtToken = (_id, role) => {
     return jwt.sign({ _id, role }, 'Developerrules', {
         expiresIn: "1d", 
     });
-};
+}; 
 
 exports.signup = (req, res) => {
     posterRegister.findOne({ email: req.body.email }).exec(async (error, user) => {
         if (user)
             return res.status(400).json({
-                error: "User already registered",
+                error: "User already registered", 
             });
 
         const { fullName, companyName, contactNumber, email, location, password } = req.body;

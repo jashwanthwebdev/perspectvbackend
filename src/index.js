@@ -10,14 +10,28 @@ console.log(port)
 env.config();
 
 
-//routes
+//Job Post routes
 const authJobposterRoutes = require('./routes/jobposter/auth');
+const routerJobPurpose    = require('./routes/jobposter/jobpurpose'); 
+
+//Admin Routes
+const adminRoutes =  require('./routes/admin/auth'); 
+const jobrolesRoutes = require('./routes/admin/jobrole')
+
 
 app.use(cors());
-app.use(express.json());  
-app.use("/public", express.static(path.join(__dirname, "uploads")));
+//app.use(express.urlencoded({ extended: true }));   
+app.use(express.json());    
+app.use("/public", express.static(path.join(__dirname, "uploads")));    
+ 
+ 
+// Job post routes
 app.use("/api/jobposter", authJobposterRoutes);
-  
+app.use('/api/jobposter/jobpurpose', routerJobPurpose); 
+
+// Admin Routes 
+app.use('/api/admin', adminRoutes);   
+app.use('/api/admin', jobrolesRoutes); 
 mongoose
   .connect(
     `mongodb+srv://nyx:Password1@hiyamee.hbljr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
@@ -26,10 +40,10 @@ mongoose
       useUnifiedTopology: true,
     }  
   )    
-  .then(() => {  
-    console.log("Database connected"); 
+  .then(() => {   
+    console.log("Database connected");      
   }); 
   
-app.listen(port, () => {  
+app.listen(port, () => {   
     console.log(`Server is running on port ${port}`);  
-});  
+});    

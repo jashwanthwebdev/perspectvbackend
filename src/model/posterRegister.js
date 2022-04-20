@@ -31,10 +31,10 @@ const jobposterSchema = new mongoose.Schema(
             type: String,
             required: true,
             trim: true,
-            unique: true,
+            unique: true,  
             lowercase: true,
         },
-        hash_password: {
+        hash_password: { 
             type: String,
             required: true,
         },
@@ -42,7 +42,7 @@ const jobposterSchema = new mongoose.Schema(
             type: String,
             required: true,
             trim: true,
-            min: 3,
+            min: 3, 
             max: 20,
         },
         otp: {
