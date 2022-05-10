@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 
 const generateJwtToken = (_id, role) => {
-    return jwt.sign({ _id, role }, 'Developerrules', {
+    return jwt.sign({ _id, role }, 'admin', {
         expiresIn: "1d", 
     });
 };
