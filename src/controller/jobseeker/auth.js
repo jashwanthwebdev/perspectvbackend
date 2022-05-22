@@ -1,6 +1,6 @@
-const posterRegister = require("../../model/posterRegister");
+const seekerRegister = require("../../model/seekerRegister");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt"); 
 const shortid = require("shortid");
 
 
@@ -11,7 +11,7 @@ const generateJwtToken = (_id, role) => {
 }; 
 
 exports.signup = (req, res) => {
-    posterRegister.findOne({ email: req.body.email }).exec(async (error, user) => {
+    seekerRegister.findOne({ email: req.body.email }).exec(async (error, user) => { 
         if (user)
             return res.status(400).json({
                 error: "User already registered", 
@@ -19,7 +19,7 @@ exports.signup = (req, res) => {
 
         const { fullName, companyName, email, location, password } = req.body;
         const hash_password = await bcrypt.hash(password, 10);
-        const _user = new posterRegister({
+        const _user = new seekerRegister({
             fullName,
             companyName,
             email,
@@ -30,7 +30,7 @@ exports.signup = (req, res) => {
             username: shortid.generate(),
         });
 
-        _user.save((error, user) => {
+        _user.save((error, user) => { 
             if (error) {
                 return res.status(400).json({
                     message: "Something went wrong",
@@ -50,20 +50,20 @@ exports.signup = (req, res) => {
 };
 
 exports.sendotp = async (req, res, next) => {
-    posterRegister.findOne({ email: req.body.email }).exec(async (error, user) => {
+    seekerRegister.findOne({ email: req.body.email }).exec(async (error, user) => {
         if (user) {
             if (req.body.type == 'SMS') {
                 // send sms 
-                await posterRegister.findOneAndUpdate({  email: req.body.email }, { contactNumber: req.body.contactNumber })
-                const { _id } = user;
+                await seekerRegister.findOneAndUpdate({  email: req.body.email }, { contactNumber: req.body.contactNumber })
+                const { _id } = user; 
                 return res.status(201).json({
-                    message:"OTP send successfully", 
+                    message:"OTP send successfully",
                     user: { _id, }
                 });
-            } else if (req.body.type == 'EMAIL') {
+            } else if (req.body.type == 'EMAIL') { 
                 // SEND SMS 
-                const { _id } = user;
-                return res.status(201).json({
+                const { _id } = user; 
+                return res.status(201).json({ 
                     message:"OTP send successfully",
                     user: { _id }
                 });
@@ -79,11 +79,11 @@ exports.sendotp = async (req, res, next) => {
 
 
 exports.verifyaccount = async (req, res, next) => {
-    posterRegister.findOne({ otp: req.body.otp, _id: req.body._id }).exec(async (error, user) => {
+    seekerRegister.findOne({ otp: req.body.otp, _id: req.body._id }).exec(async (error, user) => {
         if (user) {
-            await posterRegister.findByIdAndUpdate({ _id: req.body._id }, { isverified: true })
+            await seekerRegister.findByIdAndUpdate({ _id: req.body._id }, { isverified: true })
             return res.status(200).json({
-                message: "Account verified success, Please login"
+                message: "Account verified success, Please login" 
             });
         }
     })
@@ -91,17 +91,17 @@ exports.verifyaccount = async (req, res, next) => {
 
 
 exports.signin = (req, res) => {
-    posterRegister.findOne({ email: req.body.email }).exec(async (error, user) => {
+    seekerRegister.findOne({ email: req.body.email }).exec(async (error, user) => {
         if (error) return res.status(400).json({ error });
         if (user) {
             if(user.isverified == false){ 
                 return res.status(400).json({message:"Please verify you account"}); 
             }
             const isPassword = await user.authenticate(req.body.password);
-            console.log(isPassword)
+            console.log(isPassword)  
             if (isPassword) {
 
-                const token = generateJwtToken(user._id);
+                const token = generateJwtToken(user._id); 
                 const { _id, fullName, companyName, contactNumber, email, location, password } = user;
                 res.status(200).json({
                     token,
@@ -120,7 +120,7 @@ exports.signin = (req, res) => {
 
 
 exports.forgotpassword = async (req, res, next) => {
-    posterRegister.findOne({ email: req.body.email }).exec(async (error, user) => {
+    seekerRegister.findOne({ email: req.body.email }).exec(async (error, user) => {
         // send otp to mail 
         const { _id } = user;
         return res.status(201).json({ 
@@ -133,9 +133,9 @@ exports.forgotpassword = async (req, res, next) => {
 
 exports.updatePassword = async (req, res, next) => { 
     const hash_password = await bcrypt.hash(req.body.password, 10);
-    let update = await posterRegister.findByIdAndUpdate({ _id: req.body._id },{hash_password});
+    let update = await seekerRegister.findByIdAndUpdate({ _id: req.body._id },{hash_password});
     console.log(update)
-    if (update) {
+    if (update) { 
         return res.status(201).json({  
             message: "Password update successfully" 
         });

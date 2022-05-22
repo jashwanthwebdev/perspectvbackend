@@ -15,7 +15,7 @@ let upload = multer({ storage });
 
 routerJobposter.post('/signup',upload.none(), signup);
 routerJobposter.post('/sendotp', sendotp);
-routerJobposter.post('/verifyaccount', verifyaccount);
+routerJobposter.post('/verifyaccount', verifyaccount);  
 routerJobposter.post('/signin', signin);
 routerJobposter.post('/forgotpassword', forgotpassword);
 routerJobposter.post('/updatepassword', updatePassword);  

@@ -8,6 +8,12 @@ const jobRoleSchema = new mongoose.Schema(
             required: true,
             trim: true 
         },    
+        category:{
+            type:String, 
+        }, 
+        usertype:{ 
+            type:String   
+        } 
     },  
     { timestamps: true } 
 );

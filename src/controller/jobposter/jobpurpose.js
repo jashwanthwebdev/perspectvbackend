@@ -48,7 +48,7 @@ exports.companysize = async(req,res,next)=>{
     let question = await jobroleModel.findById({_id:'623c9ddecbef59e3c977c0c8'},{question:1}); 
     let answers  = await jobroleanswerModel.find({questionid:'623c9ddecbef59e3c977c0c8'},{answers:1});
     res.status(200).json({message:'success', result:{question,answers}})
-}
+} 
 
 exports.hiring = async(req,res,next)=>{ 
     let question = await jobroleModel.findById({_id:'623c9e68cbef59e3c977c0d6'},{question:1}); 

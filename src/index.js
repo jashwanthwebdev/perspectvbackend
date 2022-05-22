@@ -12,13 +12,18 @@ env.config();
 
 //Job Post routes
 const authJobposterRoutes = require('./routes/jobposter/auth');
+const authJobseekerRoutes = require('./routes/jobseeker/auth'); 
+const usersRoutes         = require('./routes/admin/users'); 
 const routerJobPurpose    = require('./routes/jobposter/jobpurpose'); 
+const routerOnboardingJobposter = require('./routes/jobposter/onboarding');     
+const routerSelfassessment = require('./routes/selfassessment/selfassessment'); 
 
 //Admin Routes
 const adminRoutes =  require('./routes/admin/auth'); 
-const jobrolesRoutes = require('./routes/admin/jobrole')
+const jobrolesRoutes = require('./routes/admin/jobrole');
+const { application } = require("express");
 
-
+ 
 app.use(cors());
 //app.use(express.urlencoded({ extended: true }));   
 app.use(express.json());    
@@ -27,7 +32,11 @@ app.use("/public", express.static(path.join(__dirname, "uploads")));
  
 // Job post routes
 app.use("/api/jobposter", authJobposterRoutes);
+app.use('/api/jobseeker',authJobseekerRoutes); 
+app.use('/api/admin',usersRoutes)
 app.use('/api/jobposter/jobpurpose', routerJobPurpose); 
+app.use('/api/jobposter',routerOnboardingJobposter)  
+app.use('/api/selfassessment',routerSelfassessment); 
 
 // Admin Routes 
 app.use('/api/admin', adminRoutes);   
